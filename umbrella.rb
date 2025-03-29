@@ -11,7 +11,7 @@ puts "Where are you?"
 
 #user_location = gets.chomp
 
-user_location = 'Budapest'
+user_location = 'Bratislava'
 
 #Google maps
 google_maps_url = "https://maps.googleapis.com/maps/api/geocode/json?address="+ user_location + "&key=" + gmaps_key
@@ -53,17 +53,34 @@ hourly_hash = parsed_response_pirate.fetch("hourly")
 data = hourly_hash.fetch('data')
 
 hours = 0
-
+precipitation_prob = 10
 precipitation_array = []
-13.times do
+
+13.times do |hours|
   precipitation = data[hours].fetch("precipProbability")
   precipitation_array.push(precipitation)
   hours += 1
 end
 
-precipitation_array.each do
-  
+counter = 0
+precipitation_array.each do |precip|
+  if precip * 100 > precipitation_prob
+    counter += 1
+  end
+end
+
+possible_rain = true unless counter == 0
+
+pp possible_rain
 pp precipitation_array
+pp counter
+
+#if counter == 0
+  #puts "You probably won't need an umbrella today."
+
+
+#pp precipitation_array
+#pp counter
 #if precipitation > 10
 #  puts "In #{hours} hours, there is a #{precipitation.to_i}% chance of precipitation."
 #else 
