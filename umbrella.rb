@@ -7,6 +7,9 @@ require "dotenv/load"
 pirate_weather_key = ENV.fetch("PIRATE_WEATHER_KEY")
 gmaps_key = ENV.fetch("GMAPS_KEY")
 
+puts "========================================"
+puts "    Will you need an umbrella today?    "
+puts "========================================"
 puts "Where are you?"
 
 user_location = gets.chomp
@@ -80,3 +83,10 @@ if possible_rain == true
 else
   puts "You probably won't need an umbrella today."
 end
+
+#ASCII CHART
+require 'ascii_charts'
+
+#Histogram
+puts "Hours from now vs Precipitation probability"
+puts AsciiCharts::Cartesian.new((0..12).to_a.map{|x| [x, precipitation_array[x]]}, :bar => true).draw
