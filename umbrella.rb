@@ -9,9 +9,7 @@ gmaps_key = ENV.fetch("GMAPS_KEY")
 
 puts "Where are you?"
 
-#user_location = gets.chomp
-
-user_location = 'Bratislava'
+user_location = gets.chomp
 
 #Google maps
 google_maps_url = "https://maps.googleapis.com/maps/api/geocode/json?address="+ user_location + "&key=" + gmaps_key
@@ -57,32 +55,28 @@ precipitation_prob = 10
 precipitation_array = []
 
 13.times do |hours|
-  precipitation = data[hours].fetch("precipProbability")
-  precipitation_array.push(precipitation)
+  precipitation = data[hours].fetch("precipProbability") * 100
+  precipitation_array.push(precipitation.to_i)
   hours += 1
 end
 
 counter = 0
 precipitation_array.each do |precip|
-  if precip * 100 > precipitation_prob
+  if precip > precipitation_prob
     counter += 1
   end
 end
 
 possible_rain = true unless counter == 0
 
-pp possible_rain
-pp precipitation_array
-pp counter
-
-#if counter == 0
-  #puts "You probably won't need an umbrella today."
-
-
-#pp precipitation_array
-#pp counter
-#if precipitation > 10
-#  puts "In #{hours} hours, there is a #{precipitation.to_i}% chance of precipitation."
-#else 
-#  puts "You probably won't need an umbrella today."
-#end
+if possible_rain == true
+  precipitation_array.each do |precip|
+    if precip > precipitation_prob
+      hour = precipitation_array.index(precip)
+      puts "In #{hour} hours, there is a #{precip}% chance of precipitation."
+    end
+  end
+  puts "You might want to carry an umbrella!"
+else
+  puts "You probably won't need an umbrella today."
+end
