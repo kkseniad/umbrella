@@ -43,7 +43,7 @@ current_temp = currently_hash.fetch("temperature")
 
 next_hour = currently_hash.fetch("summary")
 
-puts "The current temperature is " + current_temp.to_s + "*F."
+puts "The current temperature is " + current_temp.to_s + "\u00b0F."
 puts "Next hour: #{next_hour}"
 
 hourly_hash = parsed_response_pirate.fetch("hourly")
